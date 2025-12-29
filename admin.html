@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Sistema FIAS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar (mismo que index.html) -->
+    <div class="sidebar">
+        <!-- Mismo sidebar -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="main-header">
+            <h1><i class="fas fa-users-cog"></i> Administración del Sistema</h1>
+            <div class="header-actions">
+                <a href="index.html" class="btn-help">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <!-- Tabs de Administración -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="mostrarAdminTab('funcionarios')">
+                    <i class="fas fa-users"></i> Funcionarios
+                </button>
+                <button class="admin-tab" onclick="mostrarAdminTab('proyectos')">
+                    <i class="fas fa-project-diagram"></i> Proyectos
+                </button>
+                <button class="admin-tab" onclick="mostrarAdminTab('config')">
+                    <i class="fas fa-cogs"></i> Configuración
+                </button>
+                <button class="admin-tab" onclick="mostrarAdminTab('backup')">
+                    <i class="fas fa-database"></i> Backup
+                </button>
+            </div>
+
+            <!-- Contenido de Funcionarios -->
+            <div id="funcionariosTab" class="admin-tab-content active">
+                <div class="tab-header">
+                    <h3>Gestión de Funcionarios</h3>
+                    <button class="btn-add" onclick="nuevoFuncionario()">
+                        <i class="fas fa-plus"></i> Nuevo Funcionario
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <input type="text" id="searchFunc" placeholder="Buscar funcionario..." 
+                           onkeyup="filtrarFuncionarios()">
+                    <select id="filterProyectoFunc" onchange="filtrarFuncionarios()">
+                        <option value="">Todos los proyectos</option>
+                    </select>
+                    <select id="filterEstadoFunc" onchange="filtrarFuncionarios()">
+                        <option value="">Todos los estados</option>
+                        <option value="activo">Activos</option>
+                        <option value="inactivo">Inactivos</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table id="funcionariosTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Código</th>
+                                <th>Nombre Completo</th>
+                                <th>Proyecto</th>
+                                <th>Cargo</th>
+                                <th>Email</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="funcionariosBody">
+                            <!-- Datos cargados dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <div class="pagination">
+                        <button onclick="cambiarPaginaFunc(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <span id="paginaActual">1</span>
+                        <button onclick="cambiarPaginaFunc(1)"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="stats">
+                        Mostrando <span id="mostrandoFunc">0</span> de <span id="totalFunc">0</span> funcionarios
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido de Proyectos -->
+            <div id="proyectosTab" class="admin-tab-content">
+                <div class="tab-header">
+                    <h3>Gestión de Proyectos</h3>
+                    <button class="btn-add" onclick="nuevoProyecto()">
+                        <i class="fas fa-plus"></i> Nuevo Proyecto
+                    </button>
+                </div>
+
+                <div class="projects-grid-admin">
+                    <!-- Proyectos cargados dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Modal para editar/crear funcionario -->
+            <div id="funcionarioModal" class="modal">
+                <div class="modal-content large">
+                    <!-- Contenido dinámico -->
+                </div>
+            </div>
+
+            <!-- Modal para editar/crear proyecto -->
+            <div id="proyectoModal" class="modal">
+                <div class="modal-content large">
+                    <!-- Contenido dinámico -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

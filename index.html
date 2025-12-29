@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Marcaciones FIAS - Procesamiento</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-clock"></i>
+            <h2>FIAS Marcaciones</h2>
+        </div>
+        <nav>
+            <ul>
+                <li class="active"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="admin.html"><i class="fas fa-users-cog"></i> Administración</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Configuración</a></li>
+                <li><a href="#" onclick="verReportes()"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+                <li><a href="#" onclick="exportarTodo()"><i class="fas fa-download"></i> Exportar</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <span class="user-name">Administrador</span>
+                <span class="user-role">Sistema FIAS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+            <h1><i class="fas fa-file-upload"></i> Procesamiento de Marcaciones</h1>
+            <div class="header-actions">
+                <button class="btn-help" onclick="mostrarAyuda()">
+                    <i class="fas fa-question-circle"></i> Ayuda
+                </button>
+                <button class="btn-refresh" onclick="cargarDatos()">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Stats -->
+        <div class="dashboard-stats" id="dashboardStats">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #2c3e50;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalFuncActivos">0</h3>
+                    <p>Funcionarios Activos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #27ae60;">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalProyectos">0</h3>
+                    <p>Proyectos Activos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #3498db;">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalProcesados">0</h3>
+                    <p>Archivos Procesados</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #9b59b6;">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalMarcaciones">0</h3>
+                    <p>Marcaciones Hoy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="upload-section">
+            <div class="section-header">
+                <h2><i class="fas fa-cloud-upload-alt"></i> Cargar Archivos</h2>
+                <div class="section-actions">
+                    <button class="btn-template" onclick="descargarTemplate()">
+                        <i class="fas fa-file-download"></i> Descargar Plantilla
+                    </button>
+                </div>
+            </div>
+
+            <div class="upload-cards">
+                <!-- Teams Card -->
+                <div class="upload-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #3498db;">
+                            <i class="fab fa-microsoft"></i>
+                        </div>
+                        <h3>Microsoft Teams</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Sube el archivo de asistencia descargado de Microsoft Teams</p>
+                        <div class="file-drop-area" id="teamsDropArea">
+                            <i class="fas fa-file-excel"></i>
+                            <p>Arrastra y suelta tu archivo aquí</p>
+                            <span>o</span>
+                            <label for="teamsFile" class="btn-browse">Seleccionar Archivo</label>
+                            <input type="file" id="teamsFile" accept=".xlsx,.xls,.csv" hidden>
+                        </div>
+                        <div class="file-details" id="teamsDetails">
+                            <div class="file-info">
+                                <span class="file-name">No hay archivo seleccionado</span>
+                                <span class="file-size"></span>
+                            </div>
+                            <div class="file-actions">
+                                <button class="btn-clear-file" onclick="limpiarArchivo('teams')" title="Eliminar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biometric Card -->
+                <div class="upload-card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: #27ae60;">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <h3>Reloj Biométrico</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Sube el archivo exportado del sistema biométrico</p>
+                        <div class="file-drop-area" id="bioDropArea">
+                            <i class="fas fa-file-excel"></i>
+                            <p>Arrastra y suelta tu archivo aquí</p>
+                            <span>o</span>
+                            <label for="bioFile" class="btn-browse">Seleccionar Archivo</label>
+                            <input type="file" id="bioFile" accept=".xlsx,.xls,.csv" hidden>
+                        </div>
+                        <div class="file-details" id="bioDetails">
+                            <div class="file-info">
+                                <span class="file-name">No hay archivo seleccionado</span>
+                                <span class="file-size"></span>
+                            </div>
+                            <div class="file-actions">
+                                <button class="btn-clear-file" onclick="limpiarArchivo('bio')" title="Eliminar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-controls">
+                <button id="processBtn" class="btn-process-main" disabled>
+                    <i class="fas fa-cogs"></i>
+                    <span>Procesar Archivos</span>
+                    <div class="spinner" id="processSpinner"></div>
+                </button>
+                
+                <div class="process-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkValidar" checked>
+                        <span>Validar datos automáticamente</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkNotificar" checked>
+                        <span>Enviar notificaciones de error</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chkBackup">
+                        <span>Crear backup automático</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Resultados del Procesamiento</h2>
+                <div class="result-stats">
+                    <span class="stat-badge success" id="statsSuccess">0 exitosos</span>
+                    <span class="stat-badge warning" id="statsWarning">0 advertencias</span>
+                    <span class="stat-badge error" id="statsError">0 errores</span>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="results-tabs">
+                <button class="tab-btn active" onclick="mostrarTab('tabData')">
+                    <i class="fas fa-table"></i> Datos
+                </button>
+                <button class="tab-btn" onclick="mostrarTab('tabStats')">
+                    <i class="fas fa-chart-pie"></i> Estadísticas
+                </button>
+                <button class="tab-btn" onclick="mostrarTab('tabErrors')">
+                    <i class="fas fa-exclamation-triangle"></i> Errores
+                </button>
+                <button class="tab-btn" onclick="mostrarTab('tabProjects')">
+                    <i class="fas fa-project-diagram"></i> Por Proyecto
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Data Tab -->
+                <div id="tabData" class="tab-pane active">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchData" placeholder="Buscar en los datos...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="filterProject" onchange="filtrarPorProyecto()">
+                                <option value="">Todos los proyectos</option>
+                            </select>
+                            <select id="filterSource" onchange="filtrarPorFuente()">
+                                <option value="">Todas las fuentes</option>
+                                <option value="Teams">Teams</option>
+                                <option value="Biométrico">Biométrico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll"></th>
+                                    <th>ID</th>
+                                    <th>Funcionario</th>
+                                    <th>Proyecto</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Tipo</th>
+                                    <th>Fuente</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Stats Tab -->
+                <div id="tabStats" class="tab-pane">
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <h4>Marcaciones por Proyecto</h4>
+                            <canvas id="chartProjects"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Distribución por Fuente</h4>
+                            <canvas id="chartSources"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Horarios de Ingreso</h4>
+                            <canvas id="chartTimes"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errors Tab -->
+                <div id="tabErrors" class="tab-pane">
+                    <div class="errors-container" id="errorsContainer">
+                        <!-- Errors will be shown here -->
+                    </div>
+                </div>
+
+                <!-- Projects Tab -->
+                <div id="tabProjects" class="tab-pane">
+                    <div class="projects-grid" id="projectsGrid">
+                        <!-- Project cards will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Controls -->
+            <div class="export-controls">
+                <button class="btn-export" onclick="exportarExcel()">
+                    <i class="fas fa-file-excel"></i> Exportar a Excel
+                </button>
+                <button class="btn-export" onclick="exportarPDF()">
+                    <i class="fas fa-file-pdf"></i> Exportar a PDF
+                </button>
+                <button class="btn-export" onclick="exportarResumen()">
+                    <i class="fas fa-file-alt"></i> Generar Resumen
+                </button>
+                <button class="btn-export" onclick="enviarReporte()">
+                    <i class="fas fa-paper-plane"></i> Enviar por Email
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-section">
+            <h3><i class="fas fa-history"></i> Actividad Reciente</h3>
+            <div class="activity-list" id="activityList">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals and Dialogs -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Ayuda del Sistema</h3>
+                <span class="close" onclick="cerrarModal('helpModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Help content -->
+            </div>
+        </div>
+    </div>
+
+    <div id="exportModal" class="modal">
+        <!-- Export options -->
+    </div>
+
+    <!-- Notification System -->
+    <div id="notificationContainer"></div>
+
+    <!-- Scripts -->
+    <script src="data/proyectos.json" type="application/json" id="proyectosData"></script>
+    <script src="data/funcionarios.json" type="application/json" id="funcionariosData"></script>
+    <script src="script.js"></script>
+</body>
+</html>
