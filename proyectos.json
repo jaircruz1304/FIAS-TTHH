@@ -1,0 +1,88 @@
+{
+  "proyectos": [
+    {
+      "id": "FIAS",
+      "nombre": "Fondo de Inversión Ambiental Sostenible",
+      "descripcion": "Proyecto principal FIAS",
+      "codigoColor": "#2c3e50",
+      "activo": true,
+      "presupuesto": 5000000,
+      "fechaInicio": "2023-01-01",
+      "fechaFin": "2025-12-31",
+      "coordinador": "Nelson Paredes",
+      "responsable": "admin"
+    },
+    {
+      "id": "FEIG",
+      "nombre": "Fondo Ecuatoriano de Inversión en la Gestión Ambiental",
+      "descripcion": "Proyecto FEIG",
+      "codigoColor": "#27ae60",
+      "activo": true,
+      "presupuesto": 3000000,
+      "fechaInicio": "2024-01-01",
+      "fechaFin": "2026-12-31",
+      "coordinador": "Ana Lucia Murillo",
+      "responsable": "admin"
+    },
+    {
+      "id": "FAP",
+      "nombre": "Fondo de Áreas Protegidas",
+      "descripcion": "Proyecto FAP",
+      "codigoColor": "#3498db",
+      "activo": true,
+      "presupuesto": 2500000,
+      "fechaInicio": "2023-06-01",
+      "fechaFin": "2025-06-30",
+      "coordinador": "Nelly Paspuel",
+      "responsable": "admin"
+    },
+    {
+      "id": "BIOECONOMIA",
+      "nombre": "Bioeconomía y Desarrollo Sostenible",
+      "descripcion": "Proyecto de Bioeconomía",
+      "codigoColor": "#9b59b6",
+      "activo": true,
+      "presupuesto": 1800000,
+      "fechaInicio": "2024-02-01",
+      "fechaFin": "2026-02-28",
+      "coordinador": "Pablo Yanez",
+      "responsable": "admin"
+    },
+    {
+      "id": "CONSERVA_AVES",
+      "nombre": "Conservación de Aves",
+      "descripcion": "Proyecto de conservación de especies aviarias",
+      "codigoColor": "#e74c3c",
+      "activo": true,
+      "presupuesto": 1200000,
+      "fechaInicio": "2023-09-01",
+      "fechaFin": "2025-08-31",
+      "coordinador": "Santiago Silva",
+      "responsable": "admin"
+    },
+    {
+      "id": "PASNAP-INABIO",
+      "nombre": "Programa de Apoyo al Sistema Nacional de Áreas Protegidas - INABIO",
+      "descripcion": "Proyecto en colaboración con INABIO",
+      "codigoColor": "#f39c12",
+      "activo": true,
+      "presupuesto": 4000000,
+      "fechaInicio": "2023-03-01",
+      "fechaFin": "2026-03-31",
+      "coordinador": "Diana Quezada",
+      "responsable": "admin"
+    },
+    {
+      "id": "PASF",
+      "nombre": "Programa de Apoyo a la Sostenibilidad Financiera",
+      "descripcion": "Proyecto de sostenibilidad financiera",
+      "codigoColor": "#1abc9c",
+      "activo": true,
+      "presupuesto": 2200000,
+      "fechaInicio": "2024-01-15",
+      "fechaFin": "2026-01-14",
+      "coordinador": "Matilde Villarreal",
+      "responsable": "admin"
+    }
+  ]
+}
