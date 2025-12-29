@@ -17,17 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
 async function cargarDatosAdministracion() {
     try {
         // Cargar funcionarios
-        const funcResponse = await fetch('data/funcionarios.json');
+        const funcResponse = await fetch('funcionarios.json');
         const funcData = await funcResponse.json();
         funcionarios = Array.isArray(funcData) ? funcData : funcData.funcionarios || [];
         
         // Cargar proyectos
-        const projResponse = await fetch('data/proyectos.json');
+        const projResponse = await fetch('proyectos.json');
         const projData = await projResponse.json();
         proyectos = Array.isArray(projData) ? projData : projData.proyectos || [];
         
         // Cargar configuración
-        const configResponse = await fetch('data/config.json');
+        const configResponse = await fetch('config.json');
         const configData = await configResponse.json();
         
         // Inicializar
