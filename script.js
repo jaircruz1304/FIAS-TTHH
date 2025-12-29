@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
 async function cargarDatos() {
     try {
         // Cargar funcionarios
-        const funcResponse = await fetch('data/funcionarios.json');
+        const funcResponse = await fetch('funcionarios.json');
         const funcData = await funcResponse.json();
         funcionarios = funcData.funcionarios || funcData;
         
         // Cargar proyectos
-        const projResponse = await fetch('data/proyectos.json');
+        const projResponse = await fetch('proyectos.json');
         const projData = await projResponse.json();
         proyectos = projData.proyectos || projData;
         
