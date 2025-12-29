@@ -1,0 +1,252 @@
+{
+  "version": "2.0.0",
+  "sistema": {
+    "nombre": "Sistema de Marcaciones FIAS",
+    "siglas": "SMF",
+    "organizacion": "Fondo de Inversión Ambiental Sostenible",
+    "descripcion": "Sistema para procesamiento automático de marcaciones biométricas y de Microsoft Teams",
+    "desarrollador": "Departamento de Tecnología FIAS",
+    "contacto": "tecnologia@fias.org",
+    "anioFundacion": 2024
+  },
+  
+  "procesamiento": {
+    "formatoFechaEntrada": "YYYY-MM-DD",
+    "formatoHoraEntrada": "HH:mm:ss",
+    "formatoFechaSalida": "DD/MM/YYYY",
+    "formatoHoraSalida": "hh:mm A",
+    "separadorDecimal": ".",
+    "separadorMiles": ",",
+    "zonaHoraria": "America/Guayaquil",
+    "idioma": "es-EC",
+    
+    "horarios": {
+      "horaEntradaEstandar": "08:30:00",
+      "horaSalidaEstandar": "17:30:00",
+      "horaInicioAlmuerzo": "13:00:00",
+      "horaFinAlmuerzo": "14:00:00",
+      "toleranciaEntrada": 15,
+      "toleranciaSalida": 15,
+      "minutosAlmuerzo": 60
+    },
+    
+    "diasLaborables": [1, 2, 3, 4, 5],
+    "feriados": [
+      "2024-01-01",
+      "2024-02-12",
+      "2024-02-13",
+      "2024-03-28",
+      "2024-03-29",
+      "2024-05-01",
+      "2024-05-24",
+      "2024-08-10",
+      "2024-10-09",
+      "2024-11-02",
+      "2024-11-03",
+      "2024-12-06",
+      "2024-12-25"
+    ],
+    
+    "validaciones": {
+      "validarHorarios": true,
+      "validarDuplicados": true,
+      "validarFeriados": true,
+      "validarFinSemana": true,
+      "marcarTardanzas": true,
+      "marcarHorasExtra": true
+    }
+  },
+  
+  "archivos": {
+    "teams": {
+      "nombreArchivo": "Reporte_Teams_{fecha}.xlsx",
+      "formatoPermitido": [".xlsx", ".xls", ".csv"],
+      "tamanoMaximoMB": 10,
+      "columnasRequeridas": [
+        "Usuario",
+        "Hora de entrada",
+        "Hora de salida",
+        "Hora de inicio del descanso",
+        "Hora de finalización del descanso"
+      ],
+      "delimitadorCSV": ";"
+    },
+    
+    "biometrico": {
+      "nombreArchivo": "Reporte_Biometrico_{fecha}.xlsx",
+      "formatoPermitido": [".xlsx", ".xls", ".csv"],
+      "tamanoMaximoMB": 10,
+      "columnasRequeridas": [
+        "ID de Usuario",
+        "Tiempo",
+        "Nombre",
+        "Evento",
+        "Estado"
+      ],
+      "delimitadorCSV": ","
+    },
+    
+    "exportacion": {
+      "nombreBase": "Marcaciones_Consolidadas",
+      "formatos": [".xlsx", ".csv", ".pdf"],
+      "incluirCabecera": true,
+      "incluirResumen": true,
+      "incluirErrores": true,
+      "separadorCSV": ";",
+      "comprimirZip": false
+    }
+  },
+  
+  "seguridad": {
+    "modo": "local",
+    "requiereAutenticacion": false,
+    "roles": [
+      {
+        "id": "admin",
+        "nombre": "Administrador",
+        "permisos": ["all"]
+      },
+      {
+        "id": "supervisor",
+        "nombre": "Supervisor",
+        "permisos": ["read", "export", "process"]
+      },
+      {
+        "id": "usuario",
+        "nombre": "Usuario",
+        "permisos": ["read", "export"]
+      }
+    ],
+    
+    "backup": {
+      "automatico": true,
+      "frecuencia": "diario",
+      "mantenerDias": 30,
+      "ubicacion": "local",
+      "encriptar": false
+    }
+  },
+  
+  "notificaciones": {
+    "email": {
+      "activo": false,
+      "servidor": "smtp.gmail.com",
+      "puerto": 587,
+      "seguridad": "tls",
+      "usuario": "notificaciones@fias.org",
+      "notificarErrores": true,
+      "notificarProcesos": true
+    },
+    
+    "sistema": {
+      "mostrarNotificaciones": true,
+      "tiempoVisible": 5000,
+      "sonido": true,
+      "vibrar": false
+    }
+  },
+  
+  "reportes": {
+    "generarAutomatico": true,
+    "formatoPredeterminado": "excel",
+    "incluirGraficos": true,
+    "enviarEmail": false,
+    
+    "periodos": {
+      "diario": true,
+      "semanal": true,
+      "mensual": true,
+      "personalizado": true
+    },
+    
+    "metricas": {
+      "asistencia": true,
+      "puntualidad": true,
+      "horasTrabajadas": true,
+      "horasExtra": true,
+      "tardanzas": true,
+      "ausencias": true
+    }
+  },
+  
+  "proyectos": {
+    "activos": [
+      "FIAS",
+      "FEIG", 
+      "FAP",
+      "BIOECONOMIA",
+      "CONSERVA_AVES",
+      "PASNAP-INABIO",
+      "PASF"
+    ],
+    
+    "colores": {
+      "FIAS": "#2c3e50",
+      "FEIG": "#27ae60",
+      "FAP": "#3498db",
+      "BIOECONOMIA": "#9b59b6",
+      "CONSERVA_AVES": "#e74c3c",
+      "PASNAP-INABIO": "#f39c12",
+      "PASF": "#1abc9c",
+      "DEFAULT": "#95a5a6"
+    },
+    
+    "configuracion": {
+      "permitirNuevos": true,
+      "autoIncrementarId": true,
+      "formatoIdProyecto": "PROY-{siglas}-{secuencia}"
+    }
+  },
+  
+  "ui": {
+    "tema": "claro",
+    "colores": {
+      "primario": "#2c3e50",
+      "secundario": "#3498db",
+      "exito": "#27ae60",
+      "peligro": "#e74c3c",
+      "advertencia": "#f39c12",
+      "info": "#9b59b6"
+    },
+    
+    "idioma": "es",
+    "formatoMoneda": "USD",
+    "mostrarAyuda": true,
+    "animaciones": true
+  },
+  
+  "integraciones": {
+    "teams": {
+      "api": false,
+      "webhook": false,
+      "frecuenciaSincronizacion": "diaria"
+    },
+    
+    "biometrico": {
+      "tipo": "archivo",
+      "marca": "ZKTeco",
+      "modelo": "iClock 880",
+      "protocolo": "TCP/IP"
+    },
+    
+    "nube": {
+      "drive": false,
+      "dropbox": false,
+      "onedrive": false,
+      "googleSheets": false
+    }
+  },
+  
+  "depuracion": {
+    "nivelLog": "info",
+    "guardarLogs": true,
+    "mostrarConsola": false,
+    "reportarErrores": true
+  },
+  
+  "actualizacion": {
+    "automatica": false,
+    "urlActualizaciones": "https://api.fias.org/sistema-marcaciones/version",
+    "frecuenciaVerificacion": "semanal"
+  }
+}

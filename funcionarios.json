@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "lastUpdate": "2024-12-30",
+  "funcionarios": [
+    {
+      "id": 1,
+      "codigo": "FIAS-001",
+      "nombreCompleto": "GUILLEN PILCO CARMEN ALEXANDRA",
+      "nombre": "Carmen Alexandra",
+      "apellido": "Guillen",
+      "cargo": "AUXILIAR DE SERVICIOS GENERALES",
+      "proyecto": "FIAS",
+      "email": "carmen.guillen@fias.org",
+      "telefono": "",
+      "activo": true,
+      "fechaRegistro": "2023-01-15",
+      "fechaActualizacion": "2024-12-30",
+      "usuarioRegistro": "admin"
+    },
+    {
+      "id": 5,
+      "codigo": "FIAS-005",
+      "nombreCompleto": "VACA GARNICA INÉS FERNANDA",
+      "nombre": "Inés Fernanda",
+      "apellido": "Vaca",
+      "cargo": "CONTADORA INSTITUCIONAL",
+      "proyecto": "FIAS",
+      "email": "ines.vaca@fias.org",
+      "telefono": "",
+      "activo": true,
+      "fechaRegistro": "2023-01-15",
+      "fechaActualizacion": "2024-12-30",
+      "usuarioRegistro": "admin"
+    },
+    {
+      "id": 103,
+      "codigo": "FEIG-001",
+      "nombreCompleto": "AMAYA CAPELO BYRON ALFREDO",
+      "nombre": "Byron Alfredo",
+      "apellido": "Amaya",
+      "cargo": "TÉCNICO AREAS PROTEGIDAS Y VIDA SILVESTRE",
+      "proyecto": "FEIG",
+      "email": "byron.amaya@feig.org",
+      "telefono": "",
+      "activo": true,
+      "fechaRegistro": "2024-03-10",
+      "fechaActualizacion": "2024-12-30",
+      "usuarioRegistro": "admin"
+    }
+  ]
+}
